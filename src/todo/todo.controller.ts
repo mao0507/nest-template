@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 
 @Controller('todo') // 控制器路徑為 '/todo'
 export class TodoController {
@@ -27,8 +27,19 @@ export class TodoController {
       {
         id: 1,
         title: 'Example',
-        description: 'Example Description',
+        description: '通用路由符號範例',
       },
     ];
+  }
+
+  @Get(':id') // 處理GET請求，路徑為 '/todo/:id'
+  getTodo(@Param() params: { id: string }) {
+    // 取得路由參數
+    const { id } = params;
+    return {
+      id,
+      title: `Title ${id}`,
+      description: '路由參數範例',
+    };
   }
 }
