@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 
 @Controller('todo') // 控制器路徑為 '/todo'
 export class TodoController {
@@ -32,6 +32,7 @@ export class TodoController {
     ];
   }
 
+  // 路由參數 Path Parameters
   @Get(':id') // 處理GET請求，路徑為 '/todo/:id'
   getTodo(@Param() params: { id: string }) {
     // 取得路由參數
@@ -41,5 +42,17 @@ export class TodoController {
       title: `Title ${id}`,
       description: '路由參數範例',
     };
+  }
+
+  // 查詢參數 Query Parameters
+  @Get() // 處理GET請求
+  getQuery(@Query() query: { limit: string; skip: string }) {
+    return query;
+  }
+
+  // 查詢參數 取出特定參數
+  @Get() // 處理GET請求
+  getSpecificQuery(@Query('limit') limit: string, @Query('skip') skip: string) {
+    return { limit, skip };
   }
 }
