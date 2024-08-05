@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 
 @Controller('todo') // 控制器路徑為 '/todo'
 export class TodoController {
@@ -54,5 +54,22 @@ export class TodoController {
   @Get() // 處理GET請求
   getSpecificQuery(@Query('limit') limit: string, @Query('skip') skip: string) {
     return { limit, skip };
+  }
+
+  //主體資料 Body
+  @Post() // 處理POST請求
+  createTodo(@Body() data: { title: string; description: string }) {
+    return {
+      data,
+    };
+  }
+
+  // 取出主體特定資料
+  @Post() // 處理POST請求
+  createTodoSpecific(@Body('title') title: string, @Body('description') description: string) {
+    return {
+      title,
+      description,
+    };
   }
 }
